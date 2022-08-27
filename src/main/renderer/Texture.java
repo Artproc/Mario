@@ -10,12 +10,29 @@ import static org.lwjgl.stb.STBImage.*;
 
 public class Texture {
     private String filepath;
-    private int texID;
+    private transient int texID;
     private int width, height;
 
-    //public Texture() {
-//
-    //}
+    public Texture() {
+        texID = -1;
+        width = -1;
+        height = -1;
+    }
+
+    public Texture(int w, int h)
+    {
+        this.width = w;
+        this.height = h;
+
+        this.filepath = "Generated";
+
+        // Generate texture on GPU
+        texID = glGenTextures();
+        glBindTexture(GL_TEXTURE_2D, texID);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height,
+                0, GL_RGB, GL_UNSIGNED_BYTE, 0);
+    }
 
     public void init(String filepath)
     {
@@ -29,8 +46,10 @@ public class Texture {
         // Repeat image in both directions
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
         // When stretching the image, pixelate
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
         // When shrinking an image, pixelate
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
@@ -58,7 +77,7 @@ public class Texture {
         }
 
         stbi_image_free(image);
-    }
+    }//end of init()
 
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, texID);
@@ -67,6 +86,18 @@ public class Texture {
     public void unbind() {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+       if(obj == null) return false;
+       if(!(obj instanceof Texture))return false;
+       Texture oTex = (Texture) obj;
+       return oTex.getWidth()==getWidth() && oTex.getHeight() == getHeight() &&
+                                        oTex.getID() == getID() && oTex.getFilepath() == getFilepath();
+    }
+
+    public String getFilepath(){return filepath;}
 
     public int getWidth()
     {

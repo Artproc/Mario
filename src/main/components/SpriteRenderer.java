@@ -56,6 +56,7 @@ public class SpriteRenderer extends Component
     public Texture getTexture() {
         return sprite.getTexture();
     }
+    public void setTexture(Texture tex){sprite.setTexture(tex);}
 
     public Vector2f[] getTexCoords() {
         return sprite.getTexCoords();
