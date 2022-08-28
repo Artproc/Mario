@@ -90,9 +90,6 @@ public class GameObject
     public int uid(){ return uid; }
 
     public static void init(int maxID){ ID_COUNTER = maxID;}
-    public List<Component> getAllComponents()
-    {
-        return components;
-    }
+    public List<Component> getAllComponents(){return components;}
 
 }//end of GameObject class

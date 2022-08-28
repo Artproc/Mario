@@ -13,10 +13,10 @@ public class MouseListener {
     private static MouseListener instance;
     private double scrollX, scrollY;
     private double xPos, yPos, lastY, lastX;
-    private boolean mouseButtonPressed[] = new boolean[9];
+    private final boolean[] mouseButtonPressed = new boolean[9];
     private boolean isDragging;
-    private Vector2f gameViewportPos = new Vector2f();
-    private Vector2f gameViewportSize = new Vector2f();
+    private final Vector2f gameViewportPos = new Vector2f();
+    private final Vector2f gameViewportSize = new Vector2f();
 
 
     private MouseListener() {
@@ -115,14 +115,14 @@ public class MouseListener {
     }
 
     /**
-     * y-coordinate according to the viewport
+     * y-coordinate according to the viewport using current monitors height
      *
      * @return y coordinates according to the viewport's view
      */
     public static float getScreenY() {
+        double screenH = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
         float currentY = getY() - get().gameViewportPos.y;
-        currentY = (float) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - ((currentY / get().gameViewportSize.y)
-                                                                    * Toolkit.getDefaultToolkit().getScreenSize().getHeight()));
+        currentY = (float) (screenH - ((currentY / get().gameViewportSize.y)* screenH));
         return currentY;
     }
 

@@ -12,6 +12,8 @@ import imgui.type.ImBoolean;
 import main.editor.GameViewWindow;
 import main.scenes.Scene;
 
+import java.util.Objects;
+
 import static org.lwjgl.glfw.GLFW.*;
 
 public class ImGuiLayer
@@ -153,11 +155,7 @@ public class ImGuiLayer
             public String get()
             {
                 final String clipboardString = glfwGetClipboardString(glfwWindow);
-                if (clipboardString != null) {
-                    return clipboardString;
-                } else {
-                    return "";
-                }
+                return Objects.requireNonNullElse(clipboardString, "");
             }
         });
 
@@ -206,8 +204,8 @@ public class ImGuiLayer
     private void startFrame(final float deltaTime)
     {
         // Get window properties and mouse position
-        float[] winWidth = {Window.getWidth()};
-        float[] winHeight = {Window.getHeight()};
+        float[] winWidth = {(float) Window.getWidth()};
+        float[] winHeight = {(float) Window.getHeight()};
         double[] mousePosX = {0};
         double[] mousePosY = {0};
         glfwGetCursorPos(glfwWindow, mousePosX, mousePosY);
@@ -216,7 +214,7 @@ public class ImGuiLayer
         final ImGuiIO io = ImGui.getIO();
         io.setDisplaySize(winWidth[0], winHeight[0]);
         io.setDisplayFramebufferScale(1f, 1f);
-        io.setMousePos((float) mousePosX[0], (float) mousePosY[0] + 70);
+        io.setMousePos((float) mousePosX[0], (float) mousePosY[0] +70);
         io.setDeltaTime(deltaTime);
 
         // Update the mouse cursor
@@ -244,7 +242,7 @@ public class ImGuiLayer
         int windowFlags = ImGuiWindowFlags.MenuBar | ImGuiWindowFlags.NoDocking;
 
         ImGui.setNextWindowPos(0.0f, 0.0f, ImGuiCond.Always);
-        ImGui.setNextWindowSize(Window.getWidth(), Window.getHeight());
+        ImGui.setNextWindowSize((int) Window.getWidth(), (int) Window.getHeight());
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
         windowFlags |= ImGuiWindowFlags.NoTitleBar | ImGuiWindowFlags.NoCollapse |

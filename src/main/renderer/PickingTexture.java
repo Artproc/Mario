@@ -8,7 +8,9 @@ public class PickingTexture {
     private int depthTexture;
 
     public PickingTexture(int width, int height) {
-        assert init(width, height) : "Error initializing picking texture";
+        if (!init(width, height)) {
+            assert false : "Error initializing picking texture";
+        }
     }
 
     public boolean init(int width, int height) {
@@ -26,7 +28,7 @@ public class PickingTexture {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB32F, width, height, 0,
                 GL_RGB, GL_FLOAT, 0);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,
-                this.pickingTextureId, 0);
+                pickingTextureId, 0);
 
         // Create the texture object for the depth buffer
         glEnable(GL_TEXTURE_2D);
