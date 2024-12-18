@@ -2,6 +2,7 @@ package Main.java.jade;
 
 public abstract class Scene
 {
+    protected Camera camera;
     public Scene()
     {
 
