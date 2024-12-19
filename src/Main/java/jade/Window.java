@@ -49,7 +49,8 @@ public class Window
                 assert false : "Unknown scene '" + newScene + "'";
                 break;
         }
-        currentScene.Init();
+        currentScene.init();
+        currentScene.start();
     }
 
     public static Window Get()
