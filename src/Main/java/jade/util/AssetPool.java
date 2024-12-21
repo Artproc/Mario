@@ -1,5 +1,6 @@
 package Main.java.jade.util;
 
+import Main.java.components.Spritesheet;
 import Main.java.renderer.Shader;
 import Main.java.renderer.Texture;
 
@@ -11,6 +12,7 @@ public class AssetPool
 {
     private static Map<String, Shader> shaders = new HashMap<>();
     private static Map<String, Texture> textures = new HashMap<>();
+    private static Map<String, Spritesheet> spritesheets = new HashMap<>();
 
     public static Shader getShader(String resourceName)
     {
@@ -40,5 +42,24 @@ public class AssetPool
             textures.put(file.getAbsolutePath(), texture);
             return texture;
         }
+    }
+
+    public static void addSpritesheet(String resourceName, Spritesheet spritesheet)
+    {
+        File file = new File(resourceName);
+        if(!spritesheets.containsKey(file.getAbsolutePath()))
+        {
+            spritesheets.put(file.getAbsolutePath(), spritesheet);
+        }
+    }
+
+    public static Spritesheet getSpritesheet(String resourceName)
+    {
+        File file = new File(resourceName);
+        if(!spritesheets.containsKey(file.getAbsolutePath()))
+        {
+            assert false : "Error: Tried to access spritesheet '" + resourceName + "'but it hasn't been added to assetpool!";
+        }
+        return AssetPool.spritesheets.getOrDefault(file.getAbsolutePath(), null);
     }
 }
