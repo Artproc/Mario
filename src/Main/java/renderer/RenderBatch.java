@@ -18,7 +18,7 @@ import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
-public class RenderBatch
+public class RenderBatch implements Comparable<RenderBatch>
 {
     // Vertex
     // ======
@@ -50,8 +50,9 @@ public class RenderBatch
     private Shader shader;
     private int zIndex;
 
-    public RenderBatch(int maxBatchSize)
+    public RenderBatch(int maxBatchSize, int zIndex)
     {
+        this.zIndex = zIndex;
         shader = AssetPool.getShader("assets/shaders/default.glsl");
 
         sprites = new SpriteRenderer[maxBatchSize];
@@ -254,4 +255,15 @@ public class RenderBatch
 
     public boolean hasTextureRoom(){return this.textures.size() < 8;}
     public boolean hasTexture(Texture tex){return this.textures.contains(tex);}
+
+    public int zIndex()
+    {
+        return zIndex;
+    }
+
+    @Override
+    public int compareTo(RenderBatch o)
+    {
+        return Integer.compare(this.zIndex, o.zIndex());
+    }
 }
