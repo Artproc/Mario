@@ -11,6 +11,8 @@ import org.joml.Vector2f;
 public class LevelEditorScene extends Scene
 {
 
+    private GameObject obj1;
+    private Spritesheet sprites;
 
     public LevelEditorScene()
     {
@@ -21,11 +23,12 @@ public class LevelEditorScene extends Scene
     public void init()
     {
         loadResources();
+
         this.camera = new Camera(new Vector2f(-250, 0));
 
-        Spritesheet sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
+        sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
-       GameObject obj1 = new GameObject("Mario", new Transform(new Vector2f(100,100), new Vector2f(256,256)));
+       obj1 = new GameObject("Mario", new Transform(new Vector2f(100,100), new Vector2f(256,256)));
        obj1.addComponent(new SpriteRenderer(sprites.getSprite(0)));
        addGameObjectToScene(obj1);
 
@@ -44,11 +47,22 @@ public class LevelEditorScene extends Scene
                         16,16,26,0));
     }
 
-
+    private int spriteIndex = 0;
+    private float spriteFlipTime = 0.2f;
+    private float spriteFlipTimeLeft = 0.0f;
     @Override
     public void update(float dt)
     {
-        System.out.println(1.0f / dt + " fps");
+        spriteFlipTimeLeft -= dt;
+        if (spriteFlipTimeLeft <= 0) {
+            spriteFlipTimeLeft = spriteFlipTime;
+            spriteIndex++;
+            if (spriteIndex > 4) {
+                spriteIndex = 0;
+            }
+            obj1.getComponent(SpriteRenderer.class).setSprite(sprites.getSprite(spriteIndex));
+        }
+
         for (GameObject go : gameObjects) {
             go.update(dt);
         }

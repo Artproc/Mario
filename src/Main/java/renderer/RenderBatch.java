@@ -122,9 +122,21 @@ public class RenderBatch
 
     public void render()
     {
-        //We will rebuffer all data every frame for now
-        glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        boolean rebufferData = false;
+        for(int i = 0; i < numSprites; i++)
+        {
+            SpriteRenderer spr = sprites[i];
+            if(spr.isDirty())
+            {
+                loadVertexProperties(i);
+                spr.setClean();
+                rebufferData = true;
+            }
+        }
+        if(rebufferData) {
+            glBindBuffer(GL_ARRAY_BUFFER, vboID);
+            glBufferSubData(GL_ARRAY_BUFFER, 0, vertices);
+        }
 
         //use Shader
         shader.use();
@@ -228,7 +240,7 @@ public class RenderBatch
 
         // 3, 2, 0, 0, 2, 1        7, 6, 4, 4, 6, 5
         // Triangle 1
-        elements[offsetArrayIndex] = offset + 3;
+        elements[offsetArrayIndex]     = offset + 3;
         elements[offsetArrayIndex + 1] = offset + 2;
         elements[offsetArrayIndex + 2] = offset + 0;
 
