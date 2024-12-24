@@ -81,4 +81,5 @@ public class Texture
     {
         return width;
     }
+    public int getId(){return texID;}
 }
