@@ -5,8 +5,11 @@ import Main.java.components.Sprite;
 import Main.java.components.SpriteRenderer;
 import Main.java.components.Spritesheet;
 import Main.java.jade.util.AssetPool;
-import Main.java.renderer.Texture;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import imgui.ImGui;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 public class LevelEditorScene extends Scene
 {
@@ -29,13 +32,25 @@ public class LevelEditorScene extends Scene
         sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
        obj1 = new GameObject("Red Square", new Transform(new Vector2f(200,100), new Vector2f(256,256)), 2);
-       obj1.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/redSquare.png"))));
+       SpriteRenderer obj1Sprite = new SpriteRenderer();
+       obj1Sprite.setColor(new Vector4f(.2f,.3f,.8f,1));
+       obj1.addComponent(obj1Sprite);
        addGameObjectToScene(obj1);
+       this.activeGameObject = obj1;
 
-        GameObject obj2 = new GameObject("Green Square", new Transform(new Vector2f(400,100), new Vector2f(256,256)), 2);
-        obj2.addComponent(new SpriteRenderer(new Sprite(AssetPool.getTexture("assets/images/greenSquare.png"))));
+        GameObject obj2 = new GameObject("Green Square", new Transform(new Vector2f(400,100), new Vector2f(256,256)), 3);
+        SpriteRenderer obj2SpriteRenderer = new SpriteRenderer();
+        Sprite obj2Sprite = new Sprite();
+        obj2Sprite.setTexture(AssetPool.getTexture("assets/images/greenSquare.png"));
+        obj2SpriteRenderer.setSprite(obj2Sprite);
+        obj2.addComponent(obj2SpriteRenderer);
         addGameObjectToScene(obj2);
 
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .create();
+
+        System.out.println(gson.toJson(obj2SpriteRenderer));
     }
 
     public void loadResources()
@@ -58,4 +73,11 @@ public class LevelEditorScene extends Scene
         this.renderer.render();
     }
 
+    @Override
+    public void imgui()
+    {
+        ImGui.begin("My Window");
+        ImGui.text("This is some text! Hello ImGui!");
+        ImGui.end();
+    }
 }

@@ -10,9 +10,7 @@ public class LevelScene extends Scene
     @Override
     public void update(float dt)
     {
-        Window.Get().r = 1.0f;
-        Window.Get().g = 1.0f;
-        Window.Get().b = 1.0f;
+
     }
 
 

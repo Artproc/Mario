@@ -210,7 +210,7 @@ public class RenderBatch implements Comparable<RenderBatch>
             //load color
             vertices[offset + 2] = color.x;
             vertices[offset + 3] = color.y;
-            vertices[offset + 4] = color.x;
+            vertices[offset + 4] = color.z;
             vertices[offset + 5] = color.w;
 
             // Load texture coordinates

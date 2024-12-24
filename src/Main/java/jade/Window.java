@@ -17,6 +17,7 @@ public class Window
     private int width, height;
     private String title = "Jim's App";
     private long glfwWindow;
+    private ImGuiLayer imGuiLayer;
 
     public float r;
     public float g;
@@ -33,9 +34,9 @@ public class Window
         this.width = 1920;
         this.height = 1080;
         this.title = "Mario";
-        r = 0;
-        g = 0;
-        b = 0;
+        r = 1;
+        g = 1;
+        b = 1;
         a = 1;
     }
 
@@ -53,7 +54,7 @@ public class Window
         currentScene.start();
     }
 
-    public static Window Get()
+    public static Window get()
     {
         if(window == null)
         {
@@ -62,10 +63,7 @@ public class Window
         return window;
     }
 
-    public static Scene getScene()
-    {
-        return currentScene;
-    }
+
 
     public void run()
     {
@@ -109,6 +107,11 @@ public class Window
         glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
         glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
         glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+        glfwSetWindowSizeCallback(glfwWindow, (w, newWidth, newHeight) ->
+        {
+            Window.setWidth(newWidth);
+            Window.setHeight(newHeight);
+        });
 
         //Make OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
@@ -121,6 +124,9 @@ public class Window
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+
+        this.imGuiLayer = new ImGuiLayer(glfwWindow);
+        this.imGuiLayer.initImGui();
 
         changeScene(0);
     }
@@ -142,11 +148,30 @@ public class Window
                 currentScene.update(dt);
             }
 
+            this.imGuiLayer.update(dt, currentScene);
             glfwSwapBuffers(glfwWindow);
 
             endTime = (float) glfwGetTime();
             dt = endTime - beginTime;
             beginTime = endTime;
         }
+    }
+
+    public static Scene getScene(){return currentScene; }
+    public static double getWidth()
+    {
+        return get().width;
+    }
+    public static void setWidth(int newWidth)
+    {
+        get().width = newWidth;
+    }
+    public static double getHeight()
+    {
+        return get().height;
+    }
+    public static void setHeight(int newHeight)
+    {
+        get().height = newHeight;
     }
 }
