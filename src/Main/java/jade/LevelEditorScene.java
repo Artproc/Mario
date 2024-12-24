@@ -1,6 +1,7 @@
 package Main.java.jade;
 
 
+import Main.java.components.Component;
 import Main.java.components.Sprite;
 import Main.java.components.SpriteRenderer;
 import Main.java.components.Spritesheet;
@@ -26,8 +27,11 @@ public class LevelEditorScene extends Scene
     public void init()
     {
         loadResources();
-
         this.camera = new Camera(new Vector2f(-250, 0));
+        if(levelLoaded)
+        {
+            return;
+        }
 
         sprites = AssetPool.getSpritesheet("assets/images/spritesheet.png");
 
@@ -46,11 +50,7 @@ public class LevelEditorScene extends Scene
         obj2.addComponent(obj2SpriteRenderer);
         addGameObjectToScene(obj2);
 
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .create();
 
-        System.out.println(gson.toJson(obj2SpriteRenderer));
     }
 
     public void loadResources()
