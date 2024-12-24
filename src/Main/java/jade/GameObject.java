@@ -7,7 +7,7 @@ import java.util.List;
 
 public class GameObject
 {
-    private String name;
+    String name;
     private List<Component> components;
     public Transform transform;
     private int zIndex;

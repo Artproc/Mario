@@ -23,7 +23,6 @@ public class Window
     public float g;
     public float b;
     private float a;
-    private boolean fadeToBlack = false;
 
     private static Window window = null;
 
@@ -50,6 +49,7 @@ public class Window
                 assert false : "Unknown scene '" + newScene + "'";
                 break;
         }
+        currentScene.load();
         currentScene.init();
         currentScene.start();
     }
@@ -137,7 +137,6 @@ public class Window
         float endTime;
         float dt = -1.0f;
 
-        currentScene.load();
         while(!glfwWindowShouldClose(glfwWindow))
         {
             glfwPollEvents();
