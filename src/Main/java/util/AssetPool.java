@@ -1,4 +1,4 @@
-package Main.java.jade.util;
+package Main.java.util;
 
 import Main.java.components.Spritesheet;
 import Main.java.renderer.Shader;

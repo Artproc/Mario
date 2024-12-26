@@ -3,6 +3,7 @@ package Main.java.jade;
 
 
 
+import Main.java.scenes.Scene;
 import imgui.*;
 import imgui.callback.ImStrConsumer;
 import imgui.callback.ImStrSupplier;
@@ -13,6 +14,7 @@ import imgui.type.ImBoolean;
 import java.util.Objects;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL30.GL_FRAMEBUFFER;
 import static org.lwjgl.opengl.GL30.glBindFramebuffer;
 import imgui.gl3.ImGuiImplGl3;
@@ -181,7 +183,7 @@ public class ImGuiLayer
     private void endFrame()
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-//        glViewport(0,0, (int) Window.getWidth(), (int) Window.getHeight());
+        glViewport(0,0,  Window.getWidth(),  Window.getHeight());
 //        glClearColor(0,0,0,1);
 //        glClear(GL_COLOR_BUFFER_BIT);
         // After Dear ImGui prepared a draw data, we use it in the LWJGL3 renderer.

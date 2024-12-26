@@ -1,5 +1,8 @@
 package Main.java.jade;
 
+import Main.java.scenes.LevelEditorScene;
+import Main.java.scenes.LevelScene;
+import Main.java.scenes.Scene;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -33,9 +36,9 @@ public class Window
         this.width = 1920;
         this.height = 1080;
         this.title = "Mario";
-        r = 1;
-        g = 1;
-        b = 1;
+        r = 0.53f;
+        g = 0.81f;
+        b = 0.95f;
         a = 1;
     }
 
@@ -94,7 +97,7 @@ public class Window
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
         glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE);
-        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+        glfwWindowHint(GLFW_MAXIMIZED, GLFW_FALSE);
 
         //Create the Window
         glfwWindow = glfwCreateWindow(this.width, this.height, this.title, NULL, NULL);
@@ -159,7 +162,7 @@ public class Window
     }
 
     public static Scene getScene(){return currentScene; }
-    public static double getWidth()
+    public static int getWidth()
     {
         return get().width;
     }
@@ -167,7 +170,7 @@ public class Window
     {
         get().width = newWidth;
     }
-    public static double getHeight()
+    public static int getHeight()
     {
         return get().height;
     }

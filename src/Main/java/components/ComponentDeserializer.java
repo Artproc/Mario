@@ -1,6 +1,5 @@
-package Main.java.jade;
+package Main.java.components;
 
-import Main.java.components.Component;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

@@ -1,4 +1,4 @@
-package Main.java.jade;
+package Main.java.scenes;
 
 public class LevelScene extends Scene
 {

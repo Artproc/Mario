@@ -2,13 +2,10 @@ package Main.java.renderer;
 
 import Main.java.components.SpriteRenderer;
 import Main.java.jade.Window;
-import Main.java.jade.util.AssetPool;
+import Main.java.util.AssetPool;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.BufferUtils;
 
-import java.nio.FloatBuffer;
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 

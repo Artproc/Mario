@@ -1,6 +1,10 @@
-package Main.java.jade;
+package Main.java.scenes;
 
 import Main.java.components.Component;
+import Main.java.components.ComponentDeserializer;
+import Main.java.jade.Camera;
+import Main.java.jade.GameObject;
+import Main.java.jade.GameObjectDeserializer;
 import Main.java.renderer.Renderer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -111,11 +115,29 @@ public abstract class Scene
 
         if(!infile.equals(""))
         {
+            int maxGoId = -1;
+            int maxCompId = -1;
             GameObject[] objs = gson.fromJson(infile, GameObject[].class);
             for(int i = 0; i < objs.length; i++)
             {
                 addGameObjectToScene(objs[i]);
+
+                for(Component c : objs[i].getAllComponents())
+                {
+                    if(c.getUid() > maxCompId)
+                    {
+                        maxCompId = c.getUid();
+                    }
+                }
+                if(objs[i].getId() > maxGoId)
+                {
+                    maxGoId = objs[i].getId();
+                }
             }
+            maxGoId++;
+            maxCompId++;
+            GameObject.init(maxGoId);
+            Component.init(maxCompId);
             this.levelLoaded = true;
         }
     }
