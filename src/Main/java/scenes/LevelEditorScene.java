@@ -6,7 +6,9 @@ import Main.java.jade.Camera;
 import Main.java.jade.GameObject;
 import Main.java.jade.Prefabs;
 import Main.java.jade.Transform;
+import Main.java.renderer.DebugDraw;
 import Main.java.util.AssetPool;
+import Main.java.util.Color;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;
@@ -69,11 +71,18 @@ public class LevelEditorScene extends Scene
         AssetPool.getTexture("assets/images/greenSquare.png");
     }
 
+    float t = 0.0f;
 
     @Override
     public void update(float dt)
     {
         mouseControls.update(dt);
+
+        float x = ((float) Math.sin(t) * 200.0f) + 600;
+        float y = ((float) Math.cos(t) * 200.0f) + 400;
+        t += 0.05f;
+        DebugDraw.addLine2D(new Vector2f(600,400), new Vector2f(x, y), Color.blue3f, 10);
+
         for (GameObject go : gameObjects) {
             go.update(dt);
         }

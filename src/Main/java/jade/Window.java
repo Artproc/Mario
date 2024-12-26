@@ -1,5 +1,6 @@
 package Main.java.jade;
 
+import Main.java.renderer.DebugDraw;
 import Main.java.scenes.LevelEditorScene;
 import Main.java.scenes.LevelScene;
 import Main.java.scenes.Scene;
@@ -144,10 +145,13 @@ public class Window
         {
             glfwPollEvents();
 
+            DebugDraw.beginFrame();
+
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
 
             if(dt >= 0) {
+                DebugDraw.draw();
                 currentScene.update(dt);
             }
 
